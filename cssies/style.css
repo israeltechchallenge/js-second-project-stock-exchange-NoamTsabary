@@ -1,0 +1,55 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 1vh 1vw 1vh 1vw;
+    background-color: gainsboro;
+}
+
+.wrapper {
+    border-radius: 10px;
+    width: 98vw;
+    height: 98vh;
+    background-image: url(../images/pexels-anna-nekrashevich-6801681.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: 98% 96%;
+    background-color: gainsboro;
+}
+.top-bar {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 98vw;
+    min-height: 50px;
+    margin-bottom: 7px;
+}
+
+.btn {
+    width: 25vw;
+}
+
+.spinner-border {
+    margin-top: 20vh;
+    margin-left: 35vw;
+    height: 50vh;
+    width: 50vh;
+    font-size: 72px;
+    color: rgb(62, 41, 41);
+}
+
+.company-line {
+    background-color: white;
+    border-bottom: 2px solid black;
+    padding: 8px;
+    max-width: 34%;
+    margin-left: 2%;
+}
+
+.company-line > a {
+    text-decoration: none;
+    
+}
