@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@200;500&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: sans-serif;
 }
 
 body {
@@ -10,15 +13,15 @@ body {
 }
 
 .wrapper {
-    border-radius: 10px;
     width: 98vw;
-    height: 98vh;
+    min-height: 98vh;
     background-image: url(../images/pexels-anna-nekrashevich-6801681.jpg);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
-    background-size: 98% 96%;
+    background-size: 100% 96%;
     background-color: gainsboro;
+    border-radius: 10px;
 }
 .top-bar {
     display: flex;
@@ -32,13 +35,13 @@ body {
     width: 25vw;
 }
 
-.spinner-border {
+.spinner-grow {
     margin-top: 20vh;
     margin-left: 35vw;
     height: 50vh;
     width: 50vh;
     font-size: 72px;
-    color: rgb(62, 41, 41);
+    color:  #6B8068;
 }
 
 .company-line {
@@ -53,3 +56,108 @@ body {
     text-decoration: none;
     
 }
+
+.alert {
+    color: rgb(231, 15, 15);
+    background-color: pink;
+    max-width: 50%;
+    font-size: 24px;
+    margin-top: 3vh;
+    margin-left: 3vw;
+    border-left: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    font-family: 'Bebas Neue', 'Oswald', sans-serif;
+}
+
+.firm-container {
+    max-width: 99%;
+    margin-left: 0.5%;
+    background-image: url(../images/pexels-anna-nekrashevich-6801681.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: 100% 100%;
+    background-color: gainsboro;
+    border-radius: 10px;
+    -webkit-box-shadow: 4px 4px 40px 0px rgba(0, 0, 0, 1);
+    -moz-box-shadow: 4px 4px 40px 0px rgba(0, 0, 0, 1);
+    box-shadow: 4px 4px 40px 0px rgba(0, 0, 0, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.firm-info {
+    background-color: white;
+    margin: 0 15% 0 15%;
+    max-width: 70%;
+    max-height: 100%;
+    opacity: 0.95;
+    padding: 35px 125px 35px 125px;
+    background-image: linear-gradient(to bottom right, white, lightgray);
+    border-radius: 10px;
+    -webkit-box-shadow: 4px 4px 40px 0px rgba(0, 0, 0, 1);
+    -moz-box-shadow: 4px 4px 40px 0px rgba(0, 0, 0, 1);
+    box-shadow: 4px 4px 40px 0px rgba(0, 0, 0, 1);
+}
+.firm-info > aside {
+    float: right;
+}
+.firm-info > aside > img {
+    height: 128px;
+    width: 128px;
+}
+
+.firm-info > h2 {
+    font-family: 'Bebas Neue', 'Oswald', sans-serif;
+}
+
+.firm-info > sub {
+    font-size: 22px;
+    font-weight: 550;
+    font-family: 'Oswald', sans-serif;
+}
+.firm-info > sub > span {
+    font-size: 16px;    
+}
+
+.firm-info > sub > .green {
+    color: green;
+}
+
+.firm-info > sub > .red {
+    color: red;
+}
+
+.firm-info > h5 {
+    margin: 40px 0 20px 0;
+    font-family: 'Oswald', sans-serif;    
+}
+
+.firm-info > div {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.firm-info > p {
+    margin-top: 20px;
+}
+.chart-wrapper {
+    border-radius: 5px;
+    background-image: linear-gradient(to bottom right, white, lightgray);
+    background-size: 100% 100%;
+    margin: 1% 15% 0 15%;
+    max-width: 70%;
+}
+.chart-wrapper > .chart-header {
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+}
+
+#myChart {
+    border: 5px solid transparent;
+    border-top: none;
+}
+
