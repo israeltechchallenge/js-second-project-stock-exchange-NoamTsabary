@@ -148,16 +148,11 @@ body {
     border-radius: 5px;
     background-image: linear-gradient(to bottom right, white, lightgray);
     background-size: 100% 100%;
-    margin: 1% 15% 0 15%;
-    max-width: 70%;
+    margin: 5% 0 0 0;
 }
 .chart-wrapper > .chart-header {
     font-family: 'Oswald', sans-serif;
     text-align: center;
 }
 
-#myChart {
-    border: 5px solid transparent;
-    border-top: none;
-}
 

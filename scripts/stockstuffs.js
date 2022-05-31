@@ -23,11 +23,12 @@ topBar.appendChild(searchArea);
 topBar.appendChild(button);
 
 
-//main functions
+//main function 
 const performSearch = async () =>  {
     let listCheck = document.querySelectorAll(".company-line");
     if (listCheck) {for (const eachLine of listCheck) eachLine.remove()};
-    const searchValue = searchArea.value;
+    const searchValue = document.querySelector('.form-control').value;
+    if (searchValue.length === 0) {return}
     const url = `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/search?query=${searchValue}&amp;limit=10&amp;exchange=NASDAQ`;
     loader = document.createElement('div');
     loader.classList.add("spinner-grow");
@@ -155,8 +156,19 @@ const placeChartHTML = () => {
     canvas.setAttribute('id', 'myChart');
     chartWrapper.appendChild(chartHeader);
     chartWrapper.appendChild(canvas);
-    document.querySelector(".firm-container").appendChild(chartWrapper); 
+    document.querySelector(".firm-info").appendChild(chartWrapper); 
 }
+
+const debounce = (func, timeout = 330) => {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func.apply(this, args);
+      }, timeout);
+    };
+}
+const processChanges = debounce(() => performSearch());
 
 //listeners
 button.addEventListener('click', performSearch)
@@ -167,6 +179,9 @@ if (event.key === "Enter") {
       button.click();
     }
 });
+
+searchArea.addEventListener('input', processChanges)
+ 
 
 if (bodyId==='companyData') getCompanyInfo();
 
