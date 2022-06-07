@@ -5,7 +5,10 @@ const topBar = document.createElement('div');
 const searchArea = document.createElement('input');
 const button = document.createElement('button');
 const body = document.querySelector('body');
+const baseUrl = `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/`
 let bodyId = document.body.id
+var queryUrls = [];
+let fragmentForList = new DocumentFragment();
 
 
 //assign classes + attributes + text
@@ -25,35 +28,73 @@ topBar.appendChild(button);
 
 //main function 
 const performSearch = async () =>  {
-    let listCheck = document.querySelectorAll(".company-line");
-    if (listCheck) {for (const eachLine of listCheck) eachLine.remove()};
+    await cleanSlate();
     const searchValue = document.querySelector('.form-control').value;
     if (searchValue.length === 0) {return}
-    const url = `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/search?query=${searchValue}&amp;limit=10&amp;exchange=NASDAQ`;
-    loader = document.createElement('div');
-    loader.classList.add("spinner-grow");
-    wrapper.appendChild(loader);
+    saveQueryUrls(searchValue)
+    const url = `${baseUrl}search?query=${searchValue}&amp;limit=10&amp;exchange=NASDAQ`;
+    loading(wrapper);
     let response = await fetch(url);
     let companies = await response.json();
-    loader.remove()
+    loader.remove();
     if (companies.length === 0) noResultsFound(searchValue)
-    printSearchResults(companies)
+    else printSearchResults(companies);
+    console.log(queryUrls);
+}
+
+const cleanSlate = async () =>  {
+    let listCheck = document.querySelectorAll(".company-line");
+    if (listCheck) {for (const eachLine of listCheck) eachLine.remove()};
+    let loader = document.querySelector('.loading');
+    if (loader) loader.remove();
 }
 
 const printSearchResults = async (companies) => {
-    const maxToDisplay = Math.min(companies.length, 10)
-    // the line above likely unnecessary but it's good practice/reminder for me so it stays for now
-    let fragment = new DocumentFragment();
+    const maxToDisplay = 10;
     for (let i = 0; i < maxToDisplay ; i++) {
         let company = companies[i];
-        symbol = company.symbol
-        firmName = company.name
-        const companyLine = document.createElement("div");
-        companyLine.classList.add("company-line");
-        companyLine.innerHTML = `<a href="./company.html?symbol=${symbol}">${firmName} (${symbol})</a>`;
-        fragment.appendChild(companyLine);
+        symbol = company.symbol;
+        firmName = company.name;
+        await cleanSlate();
+        getImageAndStockChange(symbol);
     }
-    wrapper.appendChild(fragment);
+    wrapper.appendChild(fragmentForList);
+}
+
+const getImageAndStockChange = async (symbol) => {
+    const url = `${baseUrl}company/profile/${symbol}`;
+    let response = await fetch(url);
+    let firmInfo = await response.json();
+    let info = firmInfo.profile
+    let bullOrBear = "green"
+    let preColor = info.changesPercentage.slice(0, 1);
+    let plus = "+"
+    if (preColor === "-") {bullOrBear = "red"; plus = ""}
+    printLine(info, symbol, bullOrBear, plus)
+}
+
+const printLine = async (info, symbol, bullOrBear, plus) => {
+    const companyLine = document.createElement("div");
+    companyLine.classList.add("company-line");
+    companyLine.innerHTML = `<a href="./company.html?symbol=${symbol}">
+                            <img src=" ${info.image}" alt="Trademark">
+                            ${firmName} (${symbol})
+                            <span class="${bullOrBear}"> (${plus}${info.changesPercentage}%)</span>
+                            </a>`;
+    fragmentForList.appendChild(companyLine);
+}
+
+const loading = (location) => {
+    loader = document.createElement('div');
+    loader.classList.add("loading");
+    let fragment = new DocumentFragment();
+        for (let i = 0; i <5; ++i) {
+        dot = document.createElement('div');
+        dot.classList.add("dot")
+        fragment.appendChild(dot)
+        }
+    loader.appendChild(fragment);
+    location.appendChild(loader);
 }
 
 const noResultsFound = (searchValue) => {
@@ -65,17 +106,12 @@ const noResultsFound = (searchValue) => {
 }
 
 const getCompanyInfo = async () => {
-    let currentURL = window.location.href
-    const arr = currentURL.split('=')
-    let urlFirmSign =  arr.slice(-1)
-    //I know you wanted us to use querys, but this was just so simple to do...
-    const url = `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/company/profile/${urlFirmSign}`;
-    loader = document.createElement('div');
-    loader.classList.add("spinner-grow");
-    wrapper.appendChild(loader);
+    var urlParams = new URLSearchParams(window.location.search);
+    let urlFirmSign = urlParams.get('symbol');
+    const url = `${baseUrl}company/profile/${urlFirmSign}`;
+    loading(wrapper);
     let response = await fetch(url);
     let firmInfo = await response.json();
-    loader.remove()
     displayCompany(firmInfo);
     getStockHistory(urlFirmSign)
     }
@@ -107,10 +143,7 @@ const displayCompany = async (firmInfo) => {
 }
 
 const getStockHistory = async (symbol) => {
-    const url = `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/historical-price-full/${symbol}?serietype=line`;
-    loader = document.createElement('div');
-    loader.classList.add("spinner-grow");
-    document.querySelector(".firm-container").appendChild(loader); 
+    const url = `${baseUrl}historical-price-full/${symbol}?serietype=line`;
     let response = await fetch(url);
     let stockHistory = await response.json();
     loader.remove();
@@ -159,7 +192,12 @@ const placeChartHTML = () => {
     document.querySelector(".firm-info").appendChild(chartWrapper); 
 }
 
-const debounce = (func, timeout = 330) => {
+const saveQueryUrls = (text) => {
+    return queryUrls.push(`http://localhost:8080/index.html?query=${text}`)
+}
+
+
+const debounce = (func, timeout = 500) => {
     let timer;
     return (...args) => {
       clearTimeout(timer);

@@ -48,13 +48,24 @@ body {
     background-color: white;
     border-bottom: 2px solid black;
     padding: 8px;
-    max-width: 34%;
+    max-width: 54%;
     margin-left: 2%;
 }
 
 .company-line > a {
     text-decoration: none;
-    
+}
+
+.company-line > a > img {
+    height: 40px;
+}
+
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
 }
 
 .alert {
