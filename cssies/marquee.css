@@ -1,0 +1,47 @@
+
+  .marquee {
+    position: relative;
+    overflow: hidden;
+    border-top: 4px solid  rgba(54, 40, 58);
+    border-bottom: 4px solid  rgba(54, 40, 58);
+    margin-top: 4px;
+    box-shadow: 2px 2px 2px 2px #888888;
+
+  }
+
+  
+
+  .marquee__inner {
+    width: fit-content;
+    display: flex;
+    position: relative;
+    transform: translate3d(calc(-25% + 25%), 0, 0);
+    animation: marquee 0s linear infinite;
+    animation-play-state: running;
+
+  }
+.marquee__inner span {
+    font-size: 10px;
+    line-height: 10px;
+    padding: 10px 1vw 0  1vw;
+    color: green;
+    box-shadow: 10px 10px 10px 10px #888888;
+
+  }
+
+  .marquee__inner span:nth-child(even) {background-color: rgb(230, 224, 224)}
+  .marquee__inner span:nth-child(odd) {background-color: rgb(240, 236, 236);
+  }
+
+  .marquee__inner span strong {
+    color: rgb(4, 6, 27);
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translate3d(calc(-25% + 25%), 0, 0);
+    }
+    100% {
+      transform: translate3d(calc(-50% + 25%), 0, 0);
+    }
+  }

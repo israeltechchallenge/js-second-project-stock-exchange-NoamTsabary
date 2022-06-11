@@ -7,41 +7,33 @@
     font-family: sans-serif;
 }
 
-body {
-    padding: 1vh 1vw 1vh 1vw;
+html, body {
     background-color: gainsboro;
+    background-image: url(../images/pexels-anna-nekrashevich-6801681.jpg);
+
 }
 
 .wrapper {
-    width: 98vw;
     min-height: 98vh;
     background-image: url(../images/pexels-anna-nekrashevich-6801681.jpg);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
-    background-size: 100% 96%;
+    background-size: 100% 100%;
     background-color: gainsboro;
     border-radius: 10px;
 }
 .top-bar {
     display: flex;
     flex-flow: row nowrap;
-    width: 98vw;
     min-height: 50px;
     margin-bottom: 7px;
+    margin-top: 5px;
 }
 
 .btn {
-    width: 25vw;
-}
-
-.spinner-grow {
-    margin-top: 20vh;
-    margin-left: 35vw;
-    height: 50vh;
-    width: 50vh;
-    font-size: 72px;
-    color:  #6B8068;
+    width: 25%;
+    background-color: rgba(54, 40, 58);
 }
 
 .company-line {
@@ -50,6 +42,7 @@ body {
     padding: 8px;
     max-width: 54%;
     margin-left: 2%;
+    opacity: 0.89;
 }
 
 .company-line > a {
@@ -117,8 +110,8 @@ body {
     float: right;
 }
 .firm-info > aside > img {
-    height: 128px;
-    width: 128px;
+    height: 100%;
+    width: 100%;
 }
 
 .firm-info > h2 {
