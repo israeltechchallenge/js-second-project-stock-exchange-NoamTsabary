@@ -27,23 +27,6 @@ const cleanSlate = async () =>  {
     if (loader) loader.remove();
 }
 
-const marquee = async (baseUrl)  => {
-    let url = `${baseUrl}etf/list`
-    let response = await fetch(url);
-    let data = await response.json();
-    let fragmentForMarquee = new DocumentFragment();
-    let marqueeItems = data.length
-    document.querySelector(".marquee__inner").style.animationDuration = `${marqueeItems/2}s`
-    // ^ to account marquee running-speed for possible changes in API list length ^
-        for (let i = 0; i <  marqueeItems; ++i) {
-            let company = data[i]
-            marqueeSpot = document.createElement('span');
-            marqueeSpot.innerHTML = `<strong>${company.symbol}:&nbsp</strong>${company.price}`
-            fragmentForMarquee.appendChild(marqueeSpot)
-        }
-    document.querySelector(".marquee__inner").appendChild(fragmentForMarquee);
-}
-
 const checkObject = async (obj) => {
     if (Object.keys(obj).length === 0 &&
         Object.getPrototypeOf(obj) === Object.prototype)
