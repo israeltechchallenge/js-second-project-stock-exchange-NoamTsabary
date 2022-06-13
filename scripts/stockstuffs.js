@@ -1,26 +1,4 @@
 ( async () =>  {
-//creations+declarations
-const wrapper = document.createElement('div');
-const topBar = document.createElement('div');
-const searchArea = document.createElement('input');
-const button = document.createElement('button');
-const body = document.querySelector('body');
-const baseUrl = `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/`
-let bodyId = document.body.id
-let fragmentForList = new DocumentFragment();
-//assigning classes/attributes/text
-wrapper.classList.add("wrapper")
-button.classList.add('btn', 'btn-dark');
-button.setAttribute('type', 'button');
-button.innerText = 'Search'
-searchArea.classList.add('form-control');
-topBar.classList.add('top-bar')
-//appending
-body.appendChild(wrapper);
-wrapper.appendChild(topBar);
-topBar.appendChild(searchArea);
-topBar.appendChild(button);
-
 //main functions
 const performSearch = async () =>  {
     await cleanSlate();
@@ -152,7 +130,7 @@ const getStockHistory = async (symbol) => {
     }
 }
 
-await marquee(baseUrl);
+marquee.load();
 
 //listeners
 button.addEventListener('click', performSearch)
