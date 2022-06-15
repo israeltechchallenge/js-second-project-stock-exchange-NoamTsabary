@@ -1,70 +1,5 @@
 ( async () =>  {
-//main functions
-const performSearch = async () =>  {
-    await cleanSlate();
-    const searchValue = document.querySelector('.form-control').value;
-    if (searchValue.length === 0) {return}
-    const url = `${baseUrl}search?query=${searchValue}&amp;limit=10&amp;exchange=NASDAQ`;
-    loading(wrapper);
-    try {
-        let response = await fetch(url);
-        let companies = await response.json();
-        if (companies.length === 0) noResultsFound(searchValue, wrapper)
-        else printSearchResults(companies);
-    } catch (error) {
-        console.error(error);
-    }
-}
 
-const printSearchResults = async (companies) => {
-    const maxToDisplay = Math.min(companies.length, 10);
-    for (let i = 0; i < maxToDisplay ; i++) {
-        if (companies[i] === undefined || null)
-         // sometimes I can't access the companies[i] and it breaks my code.
-         // couldn't figure out why, hopefully a server issue and not my code...
-         {console.error("companies[i] unreadable [at printSearchResults in performSearch]");}
-        else {  
-            symbol = companies[i].symbol;
-            firmName = companies[i].name;
-            await getImageAndStockChange(symbol);
-        }
-    }
-    await cleanSlate()
-    wrapper.appendChild(fragmentForList);
-}
-
-const getImageAndStockChange = async (symbol) => {
-    const url = `${baseUrl}company/profile/${symbol}`;
-    try {
-        let response = await fetch(url);
-        let firmInfo = await response.json();
-        let info = firmInfo.profile
-        if (await checkObject(firmInfo)) {
-            console.error("empty object [at getImageAndStockChange in printSearchResults in performSearch");
-            await printLine(info = {changesPercentage: "cannot access"}, symbol, 'red', '')
-            // getting some empty objects... not sure why, but at least this works.
-        } else {
-            let bullOrBear = "green"
-            let preColor = info.changesPercentage.slice(0, 1);
-            let plus = "+"
-            if (preColor === "-") {bullOrBear = "red"; plus = ""}
-            await printLine(info, symbol, bullOrBear, plus)
-        }
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-const printLine = async (info, symbol, bullOrBear, plus) => {
-    const companyLine = document.createElement("div");
-    companyLine.classList.add("company-line");
-    companyLine.innerHTML = `<a href="./company.html?symbol=${symbol}">
-                            <img src=" ${info.image}" alt="(TM)">
-                            ${firmName} (${symbol})
-                            <span class="${bullOrBear}"> (${plus}${info.changesPercentage}%)</span>
-                            </a>`;
-    fragmentForList.appendChild(companyLine);
-}
 
 const getCompanyInfo = async () => {
     var urlParams = new URLSearchParams(window.location.search);
@@ -133,10 +68,6 @@ const getStockHistory = async (symbol) => {
 marquee.load();
 
 //listeners
-button.addEventListener('click', performSearch)
-
-const processChanges = debounce(() => performSearch());
-searchArea.addEventListener('input', processChanges)
 
 
 if (bodyId==='companyData') getCompanyInfo();
